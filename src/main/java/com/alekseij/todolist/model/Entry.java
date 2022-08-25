@@ -18,6 +18,7 @@ public class Entry {
             generator = "entry_sequence"
     )
     private Long id;
+    @Column(name = "this")
     private String data;
     private LocalDate date = LocalDate.now();
     private boolean is_completed = false;
@@ -32,6 +33,13 @@ public class Entry {
     public Entry(Long id, String data) {
         this.id = id;
         this.data = data;
+    }
+
+    public Entry(Long id, String data, LocalDate date, boolean is_completed) {
+        this.id = id;
+        this.data = data;
+        this.date = date;
+        this.is_completed = is_completed;
     }
 
     public Long getId() {
@@ -58,7 +66,7 @@ public class Entry {
         this.date = date;
     }
 
-    public boolean isIs_completed() {
+    public boolean is_completed() {
         return is_completed;
     }
 

@@ -21,9 +21,9 @@ public class EntryController {
     }
 
     @GetMapping(path = "{entryId}")
-    public ResponseEntity<Entry> getEntry(@PathVariable ("entryId") Long entryId) {
-//        return entryService.getEntry(entryId);
-        return ResponseEntity.ok().body(entryService.getEntry(entryId));
+    public Entry getEntry(@PathVariable ("entryId") Long entryId) {
+        return entryService.getEntry(entryId);
+
     }
 
 

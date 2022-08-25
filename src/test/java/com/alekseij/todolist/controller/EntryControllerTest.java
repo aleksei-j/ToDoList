@@ -16,7 +16,6 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -24,7 +23,7 @@ import java.util.List;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
 @WebMvcTest
 class EntryControllerTest {
@@ -40,23 +39,19 @@ class EntryControllerTest {
 
         Entry entry = new Entry(1L,"some text");
 
-//        when(entryService.getEntrys()).thenReturn(List.of(
-//                new Entry(1L,"some text")
-//        );
+        when(entryService.getEntry(eq(1L))).thenReturn(entry);
 
-        when(entryService.getEntry(eq(1L))).thenReturn(
-                entry);
 
         this.mockMvc
-                .perform(get("/", 1L))
+                .perform(MockMvcRequestBuilders.get("/{entryId}", 1L ))
 //                .andDo(MockMvcResultHandlers.print())
 //                .perform(MockMvcRequestBuilders.get("/",1L))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andDo(MockMvcResultHandlers.print())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id", Matchers.is(1)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.data", Matchers.is("some text")))
-                .andExpect(MockMvcResultMatchers.jsonPath("date", Matchers.is(LocalDate.now().toString())))
-                .andExpect(MockMvcResultMatchers.jsonPath("is_completed", Matchers.is(false)));
+//                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value()
+                .andExpect(MockMvcResultMatchers.jsonPath("$.data").value("some text"))
+                .andExpect(MockMvcResultMatchers.jsonPath("date").isNotEmpty())
+                .andExpect(MockMvcResultMatchers.jsonPath("is_completed").value(false));
     }
 
     @Test
