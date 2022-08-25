@@ -1,10 +1,11 @@
-package com.alekseij.ToDoList.entry;
+package com.alekseij.todolist.config;
 
+import com.alekseij.todolist.service.EntryRepository;
+import com.alekseij.todolist.model.Entry;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Configuration

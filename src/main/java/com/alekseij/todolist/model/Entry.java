@@ -1,4 +1,4 @@
-package com.alekseij.ToDoList.entry;
+package com.alekseij.todolist.model;
 
 import javax.persistence.*;
 import java.time.LocalDate;

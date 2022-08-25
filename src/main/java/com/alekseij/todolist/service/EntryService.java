@@ -1,5 +1,6 @@
-package com.alekseij.ToDoList.entry;
+package com.alekseij.todolist.service;
 
+import com.alekseij.todolist.model.Entry;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -14,12 +15,15 @@ public class EntryService {
         this.entryRepository = entryRepository;
     }
 
+    public Entry getEntry(Long entryId) {
+        return entryRepository.findById(entryId).orElseThrow(() -> new IllegalStateException("Entry with id: " + entryId + " does not exist."));
+    }
+
     public List<Entry> getEntrys() {
         return entryRepository.findAll();
     }
 
     public void postNewEntry(Entry entry) {
-        System.out.println(entry);
         entryRepository.save(entry);
     }
 
