@@ -2,10 +2,8 @@ package com.alekseij.todolist.controller;
 
 import com.alekseij.todolist.model.Entry;
 import com.alekseij.todolist.service.EntryService;
-import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -20,10 +18,7 @@ import static org.mockito.ArgumentMatchers.eq;
 import java.time.LocalDate;
 import java.util.List;
 
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.mockito.Mockito.*;
 
 @WebMvcTest
 class EntryControllerTest {
@@ -41,17 +36,12 @@ class EntryControllerTest {
 
         when(entryService.getEntry(eq(1L))).thenReturn(entry);
 
-
         this.mockMvc
                 .perform(MockMvcRequestBuilders.get("/{entryId}", 1L ))
-//                .andDo(MockMvcResultHandlers.print())
-//                .perform(MockMvcRequestBuilders.get("/",1L))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andDo(MockMvcResultHandlers.print())
-//                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value()
-                .andExpect(MockMvcResultMatchers.jsonPath("$.data").value("some text"))
-                .andExpect(MockMvcResultMatchers.jsonPath("date").isNotEmpty())
-                .andExpect(MockMvcResultMatchers.jsonPath("is_completed").value(false));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id", Matchers.is(1)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.data", Matchers.is("some text")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.date", Matchers.is(LocalDate.now().toString())))
+                .andExpect(MockMvcResultMatchers.jsonPath("$._completed", Matchers.is(false)));
     }
 
     @Test
@@ -72,10 +62,15 @@ class EntryControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$[1].id", Matchers.is(2)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[1].data", Matchers.is("some other text")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[1].date", Matchers.is(LocalDate.now().toString())))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[1].is_completed", Matchers.is(false)))
-                .andDo(MockMvcResultHandlers.print());
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1].is_completed", Matchers.is(false)));
     }
 
+
+    /*
+    I don't understand this test. When I run the test and print out MockHttpServletRequest it just has the
+    following: {"data": "some text"} is there a way how to test with an actual object? How do we now that the Id
+    is created and the date is inserted automatically? And also check that is_completed is set to false?
+     */
     @Test
     void postNewEntry() throws Exception {
 
@@ -84,47 +79,51 @@ class EntryControllerTest {
                         .post("/")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"data\": \"some text\"}"))
-                .andExpect(MockMvcResultMatchers.status().isOk());
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andDo(MockMvcResultHandlers.print());
 
 
         verify(entryService).postNewEntry(any(Entry.class));
     }
 
+    /*
+    Same here, we did not create any object that we can delete, how do we know that method actually deletes
+    anything?
+     */
+
     @Test
     void deleteEntry() throws Exception {
 
-//        when(entryService.getEntrys()).thenReturn(List.of(
-//                new Entry(1L,"some text"),
-//                new Entry(2L,"some other text"))
-//        );
-
-        Entry entry = new Entry(1L,"some text");
-
-
-
-
-//        when(entryService.deleteEntry(eq(1L))).
-
-        mockMvc.perform(MockMvcRequestBuilders.delete("/", 1L))
-                .andExpect(MockMvcResultMatchers.status().isOk());
+        mockMvc.perform(MockMvcRequestBuilders.delete("/{entryId}", 1L)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andDo(MockMvcResultHandlers.print());
     }
 
+    /*
+    Same here, how do we know it can update anything?
+     */
     @Test
     void updateEntryData() throws Exception {
 
-        Entry entry = new Entry(1L,"some text");
-
-        when(entryService.getEntry(eq(1L))).thenReturn(entry);
-
-        System.out.println(entry.getData());
-
-        mockMvc.perform(put("/",1L, "dslkfj"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].data", Matchers.is("dslkfj")));
-
+        mockMvc.perform(MockMvcRequestBuilders.put("/{entryId}", 1L, "some text")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andDo(MockMvcResultHandlers.print());
     }
 
+    /*
+    And the same here.
+     */
     @Test
-    void updateIs_complete() {
+    void updateIs_complete() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.put("/{entryId}", 1L, true)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andDo(MockMvcResultHandlers.print());
     }
 
 }

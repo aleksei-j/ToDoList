@@ -1,5 +1,7 @@
 package com.alekseij.todolist.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 
@@ -18,7 +20,6 @@ public class Entry {
             generator = "entry_sequence"
     )
     private Long id;
-    @Column(name = "this")
     private String data;
     private LocalDate date = LocalDate.now();
     private boolean is_completed = false;
