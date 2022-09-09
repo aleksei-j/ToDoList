@@ -48,7 +48,7 @@ public class EntryService {
     public void updateIsComplete(Long entryId, Boolean is_complete) {
 
         Entry entry = entryRepository.findById(entryId).orElseThrow(() -> new IllegalStateException("Entry with id: " + entryId + " does not exist."));
-        entry.setIs_completed(is_complete);
+        entry.setIsCompleted(is_complete);
     }
 }
 
