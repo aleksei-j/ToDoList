@@ -45,8 +45,8 @@ class EntryControllerTest {
     }
 
     @Test
-    void getEntrys() throws Exception {
-        when(entryService.getEntrys()).thenReturn(List.of(
+    void getEntries() throws Exception {
+        when(entryService.getEntries()).thenReturn(List.of(
                 new Entry(1L,"some text"),
                 new Entry(2L,"some other text"))
         );
@@ -58,11 +58,11 @@ class EntryControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].id", Matchers.is(1)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].data", Matchers.is("some text")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].date", Matchers.is(LocalDate.now().toString())))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].is_completed", Matchers.is(false)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0]._completed", Matchers.is(false)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[1].id", Matchers.is(2)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[1].data", Matchers.is("some other text")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[1].date", Matchers.is(LocalDate.now().toString())))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[1].is_completed", Matchers.is(false)));
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1]._completed", Matchers.is(false)));
     }
 
 

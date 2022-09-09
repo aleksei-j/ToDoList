@@ -19,7 +19,7 @@ public class EntryService {
         return entryRepository.findById(entryId).orElseThrow(() -> new IllegalStateException("Entry with id: " + entryId + " does not exist."));
     }
 
-    public List<Entry> getEntrys() {
+    public List<Entry> getEntries() {
         return entryRepository.findAll();
     }
 
@@ -45,7 +45,7 @@ public class EntryService {
     }
 
     @Transactional
-    public void updateIs_complete(Long entryId, Boolean is_complete) {
+    public void updateIsComplete(Long entryId, Boolean is_complete) {
 
         Entry entry = entryRepository.findById(entryId).orElseThrow(() -> new IllegalStateException("Entry with id: " + entryId + " does not exist."));
         entry.setIs_completed(is_complete);

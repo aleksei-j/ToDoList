@@ -3,9 +3,7 @@ package com.alekseij.todolist.controller;
 import com.alekseij.todolist.service.EntryService;
 import com.alekseij.todolist.model.Entry;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
 
@@ -28,8 +26,8 @@ public class EntryController {
 
 
     @GetMapping
-    public List<Entry> getEntrys() {
-        return entryService.getEntrys();
+    public List<Entry> getEntries() {
+        return entryService.getEntries();
     }
 
     @PostMapping
@@ -50,10 +48,10 @@ public class EntryController {
     }
 
     @PutMapping(path = "status/{entryId}")
-    public void updateIs_complete(
+    public void updateIsComplete(
             @PathVariable ("entryId") Long entryId,
             @RequestParam(required = false) Boolean is_complete) {
-            entryService.updateIs_complete(entryId, is_complete);
+            entryService.updateIsComplete(entryId, is_complete);
     }
 
 }
