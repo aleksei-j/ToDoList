@@ -41,7 +41,7 @@ class EntryControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id", Matchers.is(1)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.data", Matchers.is("some text")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.date", Matchers.is(LocalDate.now().toString())))
-                .andExpect(MockMvcResultMatchers.jsonPath("$._completed", Matchers.is(false)));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.completed", Matchers.is(false)));
     }
 
     @Test
@@ -58,11 +58,11 @@ class EntryControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].id", Matchers.is(1)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].data", Matchers.is("some text")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].date", Matchers.is(LocalDate.now().toString())))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0]._completed", Matchers.is(false)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].completed", Matchers.is(false)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[1].id", Matchers.is(2)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[1].data", Matchers.is("some other text")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[1].date", Matchers.is(LocalDate.now().toString())))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[1]._completed", Matchers.is(false)));
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1].completed", Matchers.is(false)));
     }
 
     @Test
