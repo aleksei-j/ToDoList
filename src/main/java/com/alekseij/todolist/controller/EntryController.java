@@ -31,8 +31,9 @@ public class EntryController {
     }
 
     @PostMapping
-    public void postNewEntry(@RequestBody Entry entry) {
+    public Long postNewEntry(@RequestBody Entry entry) {
         entryService.postNewEntry(entry);
+        return entry.getId();
     }
 
     @DeleteMapping(path = "{entryId}")
