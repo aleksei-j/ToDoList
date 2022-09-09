@@ -65,12 +65,6 @@ class EntryControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$[1]._completed", Matchers.is(false)));
     }
 
-
-    /*
-    I don't understand this test. When I run the test and print out MockHttpServletRequest it just has the
-    following: {"data": "some text"} is there a way how to test with an actual object? How do we now that the Id
-    is created and the date is inserted automatically? And also check that is_completed is set to false?
-     */
     @Test
     void postNewEntry() throws Exception {
 
@@ -86,11 +80,6 @@ class EntryControllerTest {
         verify(entryService).postNewEntry(any(Entry.class));
     }
 
-    /*
-    Same here, we did not create any object that we can delete, how do we know that method actually deletes
-    anything?
-     */
-
     @Test
     void deleteEntry() throws Exception {
 
@@ -101,9 +90,6 @@ class EntryControllerTest {
                 .andDo(MockMvcResultHandlers.print());
     }
 
-    /*
-    Same here, how do we know it can update anything?
-     */
     @Test
     void updateEntryData() throws Exception {
 
@@ -114,9 +100,6 @@ class EntryControllerTest {
                 .andDo(MockMvcResultHandlers.print());
     }
 
-    /*
-    And the same here.
-     */
     @Test
     void updateIs_complete() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.put("/{entryId}", 1L, true)
