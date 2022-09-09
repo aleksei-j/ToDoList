@@ -1,4 +1,4 @@
-package com.alekseij.ToDoList;
+package com.alekseij.todolist;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

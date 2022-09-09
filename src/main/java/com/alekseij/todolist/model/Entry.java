@@ -1,4 +1,6 @@
-package com.alekseij.ToDoList.entry;
+package com.alekseij.todolist.model;
+
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -34,6 +36,13 @@ public class Entry {
         this.data = data;
     }
 
+    public Entry(Long id, String data, LocalDate date, boolean is_completed) {
+        this.id = id;
+        this.data = data;
+        this.date = date;
+        this.is_completed = is_completed;
+    }
+
     public Long getId() {
         return id;
     }
@@ -58,7 +67,7 @@ public class Entry {
         this.date = date;
     }
 
-    public boolean isIs_completed() {
+    public boolean is_completed() {
         return is_completed;
     }
 

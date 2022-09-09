@@ -1,5 +1,6 @@
-package com.alekseij.ToDoList.entry;
+package com.alekseij.todolist.service;
 
+import com.alekseij.todolist.model.Entry;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -14,12 +15,15 @@ public class EntryService {
         this.entryRepository = entryRepository;
     }
 
-    public List<Entry> getEntrys() {
+    public Entry getEntry(Long entryId) {
+        return entryRepository.findById(entryId).orElseThrow(() -> new IllegalStateException("Entry with id: " + entryId + " does not exist."));
+    }
+
+    public List<Entry> getEntries() {
         return entryRepository.findAll();
     }
 
     public void postNewEntry(Entry entry) {
-        System.out.println(entry);
         entryRepository.save(entry);
     }
 
@@ -41,7 +45,7 @@ public class EntryService {
     }
 
     @Transactional
-    public void updateIs_complete(Long entryId, Boolean is_complete) {
+    public void updateIsComplete(Long entryId, Boolean is_complete) {
 
         Entry entry = entryRepository.findById(entryId).orElseThrow(() -> new IllegalStateException("Entry with id: " + entryId + " does not exist."));
         entry.setIs_completed(is_complete);

@@ -1,5 +1,7 @@
-package com.alekseij.ToDoList.entry;
+package com.alekseij.todolist.controller;
 
+import com.alekseij.todolist.service.EntryService;
+import com.alekseij.todolist.model.Entry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,14 +18,22 @@ public class EntryController {
         this.entryService = entryService;
     }
 
+    @GetMapping(path = "{entryId}")
+    public Entry getEntry(@PathVariable ("entryId") Long entryId) {
+        return entryService.getEntry(entryId);
+
+    }
+
+
     @GetMapping
-    public List<Entry> getEntry() {
-        return entryService.getEntrys();
+    public List<Entry> getEntries() {
+        return entryService.getEntries();
     }
 
     @PostMapping
-    public void postNewEntry(@RequestBody Entry entry  ) {
+    public Long postNewEntry(@RequestBody Entry entry) {
         entryService.postNewEntry(entry);
+        return entry.getId();
     }
 
     @DeleteMapping(path = "{entryId}")
@@ -38,11 +48,11 @@ public class EntryController {
             entryService.updateEntry(entryId, data);
     }
 
-    @PutMapping(path = "one/{entryId}")
-    public void updateIs_complete(
+    @PutMapping(path = "status/{entryId}")
+    public void updateIsComplete(
             @PathVariable ("entryId") Long entryId,
             @RequestParam(required = false) Boolean is_complete) {
-            entryService.updateIs_complete(entryId, is_complete);
+            entryService.updateIsComplete(entryId, is_complete);
     }
 
 }
