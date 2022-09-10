@@ -1,7 +1,5 @@
 package com.alekseij.todolist.model;
 
-import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
-
 import javax.persistence.*;
 import java.time.LocalDate;
 
@@ -22,7 +20,7 @@ public class Entry {
     private Long id;
     private String data;
     private LocalDate date = LocalDate.now();
-    private boolean is_completed = false;
+    private boolean isCompleted = false;
 
     public Entry() {
     }
@@ -36,11 +34,11 @@ public class Entry {
         this.data = data;
     }
 
-    public Entry(Long id, String data, LocalDate date, boolean is_completed) {
+    public Entry(Long id, String data, LocalDate date, boolean isCompleted) {
         this.id = id;
         this.data = data;
         this.date = date;
-        this.is_completed = is_completed;
+        this.isCompleted = isCompleted;
     }
 
     public Long getId() {
@@ -67,11 +65,11 @@ public class Entry {
         this.date = date;
     }
 
-    public boolean is_completed() {
-        return is_completed;
+    public boolean isCompleted() {
+        return isCompleted;
     }
 
-    public void setIs_completed(boolean is_completed) {
-        this.is_completed = is_completed;
+    public void setCompleted(boolean completed) {
+        this.isCompleted = completed;
     }
 }
